@@ -10,7 +10,7 @@ class AuthorizeApiRequest # :nodoc:
   end
 
   def call
-    return errors.add(token: 'Invalid token') unless user.nil?
+    errors.add(:error, 'Invalid token') if user.nil?
 
     user
   end
@@ -18,7 +18,7 @@ class AuthorizeApiRequest # :nodoc:
   private
 
   def user
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    @user ||= User.find_by(id: decoded_auth_token[:user_id])
   end
 
   def decoded_auth_token
@@ -28,6 +28,6 @@ class AuthorizeApiRequest # :nodoc:
   def http_auth_header
     errors.add(token: 'Missing token') unless headers['Authorization'].present?
 
-    headers['Authorization'].split(' ').last
+    headers['Authorization'].split('Token=').last
   end
 end

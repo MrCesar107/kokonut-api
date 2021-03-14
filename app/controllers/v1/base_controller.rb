@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module V1
-  class BaseController < ApplicationController
+  class BaseController < ApplicationController # :nodoc:
+    include ExceptionHandler
     before_action :authenticate_request
 
     protected
@@ -13,8 +14,10 @@ module V1
     def authenticate_request
       @current_user = AuthorizeApiRequest.call(request.headers).result
 
-      render json: { error: "This is not an authorized request" },
-             status: :unauthorized unless @current_user
+      return if current_user
+
+      render json: { error: 'This is not an authorized request' },
+             status: :unauthorized
     end
   end
 end

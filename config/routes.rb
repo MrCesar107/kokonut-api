@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :authentications, only: %i[create]
+    resource :password, only: %i[create update]
+    resources :users
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

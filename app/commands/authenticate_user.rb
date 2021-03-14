@@ -11,16 +11,28 @@ class AuthenticateUser # :nodoc:
   end
 
   def call
-    JsonWebToken.encode(user_id: api_user.id) if api_user
+    if valid?
+      auth_token = JsonWebToken.encode(user_id: api_user.id)
+      api_user.update auth_token: auth_token
+      api_user
+    else
+      errors.add(:message, 'Invalid credentials')
+    end
   end
 
   private
 
   def api_user
-    user = User.find_by email: email
+    @api_user ||= User.find_by email: email
+  end
 
-    errors.add message: 'Invalid credentials' unless user.present? && user.valid_password?(password)
+  def passwords_match
+    api_user &&
+      Devise::Encryptor.compare(api_user.class, api_user.encrypted_password,
+                                password)
+  end
 
-    user
+  def valid?
+    !api_user.nil? && passwords_match
   end
 end

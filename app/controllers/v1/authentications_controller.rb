@@ -8,7 +8,7 @@ module V1
       authentication = AuthenticateUser.call(email, password)
 
       if authentication.success?
-        render json: { auth_token: authentication.result }
+        render json: { user: authentication.result }
       else
         render json: { error: authentication.errors }, status: :unauthorized
       end
