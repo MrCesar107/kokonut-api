@@ -15,13 +15,15 @@ module Users
       if valid?
         user = User.create! user_params
         add_token_to(user)
-        RegistrationUser.new user
+        response = RegistrationUser.new user
+        { user: response.to_model, status: response.http_status }
       else
-        RegistrationError.new self
+        error = RegistrationError.new self
+        { message: error.message, status: error.http_status }
       end
     rescue ActiveRecord::RecordInvalid => e
       error = RegistrationError.new e.record
-      { message: error.message, http_status: error.http_status }
+      { message: error.message, status: error.http_status }
     end
 
     private

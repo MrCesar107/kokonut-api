@@ -6,7 +6,7 @@ module V1
 
     def create
       user = ::Users.registration user_params
-      render json: user, status: user[:http_status]
+      render json: user, http_status: user[:status]
     end
 
     def show

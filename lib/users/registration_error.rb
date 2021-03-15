@@ -13,12 +13,6 @@ module Users
       401
     end
 
-    # This code is an arbitrary generated code for API. When clients recieve
-    # this code, they'll manage it whatever they like.
-    def code
-      7000
-    end
-
     # This is the error message that API clients will recieve in the response
     def message
       registration.errors.full_messages.first
