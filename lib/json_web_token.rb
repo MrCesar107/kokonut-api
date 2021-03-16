@@ -2,7 +2,7 @@
 
 class JsonWebToken # :nodoc:
   def self.decode(token)
-    secret_key_base = Rails.application.secrets.secret_key_base
+    secret_key_base = ENV['JWT_SECRET']
     body = JWT.decode(token, secret_key_base)[0]
     HashWithIndifferentAccess.new body
   rescue JWT::ExpiredSignature => e
@@ -13,7 +13,7 @@ class JsonWebToken # :nodoc:
 
   def self.encode(payload, expires_at = 24.hours.from_now)
     payload[:expires_at] = expires_at.to_i
-    secret_key_base = Rails.application.secrets.secret_key_base
+    secret_key_base = ENV['JWT_SECRET']
     JWT.encode payload, secret_key_base
   end
 end

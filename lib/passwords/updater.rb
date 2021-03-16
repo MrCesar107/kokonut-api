@@ -13,12 +13,15 @@ module Passwords
     def update
       if password_belongs_to_resource?
         resource.update! password: new_password
-        Confirmation.new
+        http_status = ::Passwords::Confirmation.new.http_status
+        { mesage: 'Password has been updated', http_status: http_status }
       else
-        NonMatchingPasswords.new
+        response = ::Passwords::NonMatchingPasswords.new
+        { mesage: response.message, http_status: response.http_status }
       end
     rescue ActiveRecord::RecordInvalid => e
-      InvalidNewPassword.new e.record
+      response = InvalidNewPassword.new e.record
+      { mesage: response.message, http_status: response.http_status }
     end
 
     private

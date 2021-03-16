@@ -7,7 +7,7 @@ module Passwords
     end
 
     def http_status
-      :ok
+      200
     end
   end
 end

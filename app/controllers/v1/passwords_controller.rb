@@ -18,7 +18,7 @@ module V1 # :nodoc:
 
     def update
       confirmation = ::Users.update_password current_user, password_params
-      render json: confirmation, status: confirmation.http_status
+      render json: confirmation, status: confirmation[:http_status]
     end
 
     private

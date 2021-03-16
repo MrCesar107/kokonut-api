@@ -44,6 +44,12 @@ Una vez creada nuestras bases de datos, ya podemos iniciar nuestro proyecto usan
 
 Este comando inicializa nuestro servidor y que esté listo para escuchar peticiones provenientes de varios clientes (para este caso, utilizaremos **Postman** o algun software similar para realizar las peticiones).
 
+### Usar esta API en producción
+Si no desea probar este proyecto en su computadora, puede hacerlo utilizando
+la siguiente URL en lugar de ``localhost:3000``
+
+**URL de producción:** ``https://kokonut-api.herokuapp.com/``
+
 ### Lista de endpoints
 Para poder usar nuestros endpoints, debemos usar el siguiente dominio
 **localhost:3000**
