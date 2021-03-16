@@ -3,22 +3,29 @@
 class AuthorizeApiRequest # :nodoc:
   prepend SimpleCommand
 
-  attr_reader :headers
+  attr_reader :headers, :moderator_request
 
-  def initialize(headers = {})
+  def initialize(headers = {}, moderator_request: false)
     @headers = headers
+    @moderator_request = moderator_request
   end
 
   def call
-    errors.add(:error, 'Invalid token') if user.nil?
+    errors.add(:error, 'Invalid token') if user.nil? || moderator.nil?
+
+    return moderator if moderator_request
 
     user
   end
 
   private
 
+  def moderator
+    @moderator ||= Moderator.find_by id: decoded_auth_token[:moderator_id]
+  end
+
   def user
-    @user ||= User.find_by(id: decoded_auth_token[:user_id])
+    @user ||= User.find_by id: decoded_auth_token[:user_id]
   end
 
   def decoded_auth_token

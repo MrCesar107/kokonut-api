@@ -33,10 +33,6 @@ module Users
       user.update auth_token: auth_token
     end
 
-    def payload
-      { user_id: @user.id }
-    end
-
     def user_params
       { name: name, nickname: nickname, email: email, password: password,
         password_confirmation: password_confirmation }

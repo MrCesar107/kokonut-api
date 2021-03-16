@@ -7,14 +7,17 @@ module V1
 
     protected
 
-    attr_reader :current_user
+    attr_reader :current_user, :current_moderator
 
     private
 
     def authenticate_request
       @current_user = AuthorizeApiRequest.call(request.headers).result
+      @current_moderator = AuthorizeApiRequest.call(request.headers,
+                                                    moderator_request: true)
+                                              .result
 
-      return if current_user
+      return if current_user || current_moderator
 
       render json: { error: 'This is not an authorized request' },
              status: :unauthorized

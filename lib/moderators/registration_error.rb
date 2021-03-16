@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Users
+module Moderators
   # This class generates the user registration errors JSON for the API response
   class RegistrationError < ActiveModelSerializers::Model
     attr_reader :registration

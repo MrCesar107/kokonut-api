@@ -17,7 +17,7 @@ module V1
       if current_user.update update_user_params
         render json: current_user, status: :ok
       else
-        render json: { error: 'User cannot be updated' }, status: 500
+        render json: { error: 'User cannot be updated' }, status: 401
       end
     end
 
