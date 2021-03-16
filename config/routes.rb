@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :moderators
   devise_for :users
 
   namespace :v1 do
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
     resources :users, except: %i[destroy] do
       resources :photos, only: %i[index show create destroy]
     end
+    resources :moderators, except: %i[destroy]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
