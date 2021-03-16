@@ -26,7 +26,8 @@ class AuthorizeApiRequest # :nodoc:
   end
 
   def http_auth_header
-    errors.add(token: 'Missing token') unless headers['Authorization'].present?
+    return errors.add(:error, 'Missing token') unless
+      headers['Authorization'].present?
 
     headers['Authorization'].split('Token=').last
   end

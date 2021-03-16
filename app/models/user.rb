@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :omniauth_providers
+  has_many :photos
 
   has_secure_token :auth_token
 end

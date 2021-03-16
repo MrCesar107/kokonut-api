@@ -28,6 +28,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # Added gems
 gem 'active_model_serializers'
 gem 'active_type'
+gem 'cloudinary'
 gem 'devise'
 gem 'json_schemer'
 gem 'jwt'
